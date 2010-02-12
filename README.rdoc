@@ -1,0 +1,49 @@
+== PURSPOSE
+
+This Rails plugin presents you with ability to easy catch application events such as user login, user posted a comment, product reviewed etc. 
+What it actually does is provides a neat DSL that describes event catcher code. This code will then be executed as 'around_filter' in controller specified.
+
+== INSTALLATION
+
+  ./script/plugin install git://github.com/cleverua/event_catcher.git
+
+
+== USAGE
+
+First off, you have to generate an event code, lets do it:
+  
+  ./script/generate event comments
+
+This will generate the following comments_event.rb file in #{RAILS_ROOT}/app/events folder:
+
+  catch_event CommentsController => :create do 
+    before_action do
+      ...
+    end
+            
+    after_action do
+      ...
+    end                     
+  end
+
+The first line of it tells that it will catch up when CommentsController#create action gets fired, you'll have an 
+opportunity to get all required information about the event, for instance:
+
+  catch_event CommentsController => :create do
+    before_action do
+      # leaving it blank in this case
+    end
+
+    after_action do
+      EventInfo.create(:user => current_user, :comment => @comment)
+    end
+  end
+
+The catcher above will create EventInfo record each time user places a comment via CommentsController#create
+
+Catchers get mixed into controllers, so they have access to their instance variables, cookies, session data and so on.:
+
+
+== COPYRIGHT
+
+Copyright (c) 2010 CleverUA, released under the MIT license
