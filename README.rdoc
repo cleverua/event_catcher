@@ -46,4 +46,4 @@ Catchers get mixed into controllers, so they have access to their instance varia
 
 == COPYRIGHT
 
-Copyright (c) 2010 CleverUA, released under the MIT license
+Copyright (c) 2010 CleverUA, released under the MIT license.
